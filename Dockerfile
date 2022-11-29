@@ -26,7 +26,7 @@ RUN mkdir -p /tmp/build && \
     export CT_ALLOW_BUILD_AS_ROOT_SURE=1 && \
     ct-ng build.4 && \
     cd .. && \
-    rm -rf buil
+    rm -rf build
     
 FROM amd64/centos:7 as x86_64_cross_aarch64
 
