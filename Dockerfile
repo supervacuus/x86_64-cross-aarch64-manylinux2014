@@ -50,3 +50,12 @@ ENV CARGO_BUILD_TARGET=aarch64-unknown-linux-gnu
 ENV CARGO_TARGET_AARCH64_UNKNOWN_LINUX_GNU_LINKER=aarch64-unknown-linux-gnu-gcc
 RUN echo "set(CMAKE_SYSTEM_NAME Linux)\nset(CMAKE_SYSTEM_PROCESSOR aarch64)\nset(CMAKE_SYSROOT /usr/aarch64-unknown-linux-gnu/aarch64-unknown-linux-gnu/sysroot/)\nset(CMAKE_C_COMPILER aarch64-unknown-linux-gnu-gcc)\nset(CMAKE_CXX_COMPILER aarch64-unknown-linux-gnu-g++)" > /usr/aarch64-unknown-linux-gnu/cmake-toolchain.cmake
 ENV TARGET_CMAKE_TOOLCHAIN_FILE_PATH=/usr/aarch64-unknown-linux-gnu/cmake-toolchain.cmake
+
+ENV RUSTUP_HOME=/usr/local/rustup \
+    CARGO_HOME=/usr/local/cargo \
+    PATH=/usr/local/cargo/bin:$PATH
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal \
+    && rustup target add "aarch64-unknown-linux-gnu" \
+    # Reduce memory consumption by avoiding cargo's libgit2
+    && echo -e "[net]\ngit-fetch-with-cli = true" > $CARGO_HOME/config
