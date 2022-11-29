@@ -55,7 +55,9 @@ ENV RUSTUP_HOME=/usr/local/rustup \
     CARGO_HOME=/usr/local/cargo \
     PATH=/usr/local/cargo/bin:$PATH
 
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal \
-    && rustup target add "aarch64-unknown-linux-gnu" \
+RUN yum -y update && \
+    yum install -y git && \
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --profile minimal && \
+    rustup target add "aarch64-unknown-linux-gnu" && \
     # Reduce memory consumption by avoiding cargo's libgit2
-    && echo -e "[net]\ngit-fetch-with-cli = true" > $CARGO_HOME/config
+    echo -e "[net]\ngit-fetch-with-cli = true" > $CARGO_HOME/config
