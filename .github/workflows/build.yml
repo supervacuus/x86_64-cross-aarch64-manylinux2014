@@ -21,6 +21,6 @@ jobs:
       - name: Build toolchain image
         run: docker build --ulimit nofile=65536 -t the_aarch64_builder .
       - name: Tag toolchain image
-        run: docker image tag the_aarch64_builder ${{ secrets.DOCKERHUB_USERNAME }}/the_aarch64_buildert:${{ github.event.inputs.version }}
+        run: docker image tag the_aarch64_builder ${{ secrets.DOCKERHUB_USERNAME }}/the_aarch64_builder:${{ github.event.inputs.version }}
       - name: Upload toolchain image
         run: docker image push ${{ secrets.DOCKERHUB_USERNAME }}/the_aarch64_builder:${{ github.event.inputs.version }}
