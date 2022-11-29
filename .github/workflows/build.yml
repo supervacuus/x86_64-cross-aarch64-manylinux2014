@@ -1,0 +1,14 @@
+name: docker-build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  download:
+    runs-on: ubuntu-latest
+    name: "build"
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+      - run: docker build --ulimit nofile=65536 -t the_aarch64_builder .
